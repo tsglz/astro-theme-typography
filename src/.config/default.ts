@@ -5,9 +5,9 @@ import type { ThemeConfig } from '~/types'
 
 export const defaultConfig: ThemeConfig = {
   site: {
-    title: 'Tsglz\'s blog',
+    title: "Tsglz's blog",
     subtitle: 'keep learning',
-    author: 'Moeyua',
+    author: 'Tsglz',
     description: 'Rediscory the beauty of typography',
     website: 'https://astro-theme-typography.vercel.app/',
     pageSize: 5,
