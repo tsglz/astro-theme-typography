@@ -63,7 +63,7 @@ slug:
 + expiration 按照需要配置
   + 并不建议一直用一个
 
-<img src="/hexo/github_token.png">
+<img src="/hexo/github_Token.png">
 
 ## 三、Hexo部分
 
