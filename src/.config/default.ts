@@ -5,8 +5,8 @@ import type { ThemeConfig } from '~/types'
 
 export const defaultConfig: ThemeConfig = {
   site: {
-    title: '活版印字',
-    subtitle: 'Typography',
+    title: 'Tsglz',
+    subtitle: 'keep learning',
     author: 'Moeyua',
     description: 'Rediscory the beauty of typography',
     website: 'https://astro-theme-typography.vercel.app/',
