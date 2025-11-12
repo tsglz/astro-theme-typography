@@ -1,9 +1,9 @@
 ---
 title: Part_One_First_Sight
 pubDate: 2024-11-05
-categories: ['rustOS']
+categories: ['RustOS']
 description: ''
-slug: 
+slug:
 ---
 
 参考：[独立式可执行程序 | Writing an OS in Rust](https://os.phil-opp.com/zh-CN/freestanding-rust-binary/)
@@ -13,15 +13,15 @@ slug:
 ```rust
 #![no_std] // 不链接 Rust 标准库
 #![no_main] // 禁用所有 Rust 层级的入口点
-  
+
 use core::panic::PanicInfo;
-  
+
 /// 这个函数将在 panic 时被调用
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
     loop {}
 }
-  
+
 #[no_mangle] // 不重整函数名
 pub extern "C" fn _start() -> ! {
     // 因为链接器会寻找一个名为 `_start` 的函数，所以这个函数就是入口点
@@ -59,13 +59,22 @@ cargo rustc -- -C link-args="/ENTRY:_start /SUBSYSTEM:console"
 
 ```toml
 [target.'cfg(target_os = "linux")']
-rustflags = ["-C", "link-arg=-nostartfiles"]
+rustflags = [
+  "-C",
+  "link-arg=-nostartfiles"
+]
 
 [target.'cfg(target_os = "windows")']
-rustflags = ["-C", "link-args=/ENTRY:_start /SUBSYSTEM:console"]
+rustflags = [
+  "-C",
+  "link-args=/ENTRY:_start /SUBSYSTEM:console"
+]
 
 [target.'cfg(target_os = "macos")']
-rustflags = ["-C", "link-args=-e __start -static -nostartfiles"]
+rustflags = [
+  "-C",
+  "link-args=-e __start -static -nostartfiles"
+]
 ```
 
 上述只是拓展的方法，之后的编译都使用裸机，输入如下代码

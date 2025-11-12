@@ -21,3 +21,8 @@ pnpm-debug.log*
 .DS_Store
 
 Markdown style guide.md
+
+# temporarily ignored files
+src\content\posts\（待完成）关于社会心理学学习的简单感悟.md
+src\content\posts\（待完成）常见系统调用.md
+src\content\posts\（待完成）yara的简单使用指南（一）.md

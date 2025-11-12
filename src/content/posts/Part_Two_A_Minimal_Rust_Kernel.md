@@ -1,9 +1,9 @@
 ---
 title: Part_Two_A_Minimal_Rust_Kernel
 pubDate: 2024-11-05
-categories: ['rustOS']
+categories: ['RustOS']
 description: ''
-slug: 
+slug:
 ---
 
 ## 目的
@@ -14,33 +14,36 @@ slug:
 
 ```json
 {
-    "llvm-target": "x86_64-unknown-none",
-    "data-layout": "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128",
-    "arch": "x86_64",
-    "target-endian": "little",
-    "target-pointer-width": "64",
-    "target-c-int-width": "32",
-    "os": "none",
-    "executables": true,
-    "linker-flavor": "ld.lld",
-    "linker": "rust-lld",
-    "panic-strategy": "abort",
-    "disable-redzone": true,
-    "features": "-mmx,-sse,+soft-float"
+  "llvm-target": "x86_64-unknown-none",
+  "data-layout": "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128",
+  "arch": "x86_64",
+  "target-endian": "little",
+  "target-pointer-width": "64",
+  "target-c-int-width": "32",
+  "os": "none",
+  "executables": true,
+  "linker-flavor": "ld.lld",
+  "linker": "rust-lld",
+  "panic-strategy": "abort",
+  "disable-redzone": true,
+  "features": "-mmx,-sse,+soft-float"
 }
 ```
 
-## *build-std* 特性
+## _build-std_ 特性
 
 允许按照自己的需要重编译 core 等标准 crate，而不需要使用 Rust 安装程序内置的预编译版本
 
-但是该特性是全新的功能，到目前为止尚未完全完成，所以它被标记为 “unstable” 且仅被允许在 *Nightly* 环境下调用
+但是该特性是全新的功能，到目前为止尚未完全完成，所以它被标记为 “unstable” 且仅被允许在 _Nightly_ 环境下调用
 
 要启用该特性，在 `.cargo/config.toml` 写入以下语句：
 
 ```toml
 [unstable]
-build-std = ["core", "compiler_builtins"]
+build-std = [
+  "core",
+  "compiler_builtins"
+]
 ```
 
 该配置会告知cargo需要重新编译 `core` 和 `compiler_builtins` 这两个crate，其中 `compiler_builtins` 是 `core` 的必要依赖
@@ -57,12 +60,12 @@ rustup component add rust-src
 cargo build --target .\src\FlowOS.json
 ```
 
-## *build-std-features*
+## _build-std-features_
 
-为了使用内存相关函数，在 `.cargo/config.toml`  的 \[`unstable`\] 写入以下语句：
+为了使用内存相关函数，在 `.cargo/config.toml` 的 \[`unstable`\] 写入以下语句：
 
 ```toml
-build-std-features = ["compiler-builtins-mem"]
+build-std-features = [ "compiler-builtins-mem" ]
 ```
 
 设置编译目标：在 `.cargo/config.toml` 加入如下选项，接下来，==使用 cargo build 即可进行编译==
@@ -118,7 +121,7 @@ bootloader = "0.9"
 cargo install bootimage
 ```
 
-### 安装  llvm-tools-preview
+### 安装 llvm-tools-preview
 
 ```rust
 rustup component add llvm-tools-preview
@@ -146,7 +149,7 @@ qemu-system-x86_64 -drive format=raw,file=target\FlowOS\debug\bootimage-FlowOS.b
 
 ### 使用 `cargo run`
 
-在 `.cargo/config.toml`  中设置 `runner` 配置项：
+在 `.cargo/config.toml` 中设置 `runner` 配置项：
 
 ```toml
 [target.'cfg(target_os = "none")']

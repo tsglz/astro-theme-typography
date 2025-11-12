@@ -1,9 +1,9 @@
 ---
 title:  ppid 伪造(一)
 pubDate: 2025-03-10
-categories: ['red team']
+categories: ['Red Team']
 description: ''
-slug: 
+slug:
 ---
 
 让恶意的程序看起来是由另一个进程产生的，主要用于逃避基于父子进程关系的检测
@@ -261,7 +261,7 @@ int main() {
 	LPCWSTR parentProcess = L"svchost.exe";
 	DWORD parentPID = getPPID(parentProcess);
 	printf("[+] Spoofing %ws (PID: %u) as the parent process.\n", parentProcess, parentPID);
-	
+
 	// 这里末尾的数字是目标父进程的 pid，可以自定义函数获取
 	HANDLE parentProcessHandle = OpenProcess(MAXIMUM_ALLOWED, false, parentPID);
 	InitializeProcThreadAttributeList(NULL, 1, 0, &attributeSize);
@@ -269,7 +269,7 @@ int main() {
 	InitializeProcThreadAttributeList(si.lpAttributeList, 1, 0, &attributeSize);
 	UpdateProcThreadAttribute(si.lpAttributeList, 0, PROC_THREAD_ATTRIBUTE_PARENT_PROCESS, &parentProcessHandle, sizeof(HANDLE), NULL, NULL);
 	si.StartupInfo.cb = sizeof(STARTUPINFOEXA);
-	
+
 	// 这里添加目标子进程的路径或者启动命令
 	LPCWSTR spawnProcess = L"C:\\Windows\\System32\\notepad.exe";
 	CreateProcess(spawnProcess, NULL, NULL, NULL, TRUE, EXTENDED_STARTUPINFO_PRESENT, NULL, NULL, (STARTUPINFO*)&si, &pi);

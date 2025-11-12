@@ -1,9 +1,9 @@
 ---
 title: Scripts
 pubDate: 2024-10-18
-categories: ['wp']
+categories: ['Wp']
 description: ''
-slug: 
+slug:
 ---
 
 最近打比赛，发现有很多脚本能够实现模板化处理，能够节省大量时间
@@ -23,7 +23,7 @@ int main() {
     unsigned char v5[string_length] = {
         // 密文
     };
-    
+
     // 定义解密后的flag数组
     char flag[string_length + 1]; // 长度 + '\0' 结束符
 
@@ -38,8 +38,6 @@ int main() {
     return 0;
 }
 ```
-
-
 
 ## 带密钥的异或
 
@@ -63,8 +61,6 @@ for i in range(len(v6)):
 # 输出解密得到的 flag
 print(bytes(flag).decode())
 ```
-
-
 
 ## 大小写转化
 
@@ -103,8 +99,6 @@ decrypted_flag = Decrypt(encrypted_msg, key)
 print(decrypted_flag)
 ```
 
-
-
 ## 大小写转化+简单移位
 
 ```python
@@ -142,8 +136,6 @@ decrypted_flag = Decrypt(encrypted_msg, key)
 print(decrypted_flag)
 ```
 
-
-
 ## 简单的RSA+MD5处理flag
 
 ```python
@@ -152,8 +144,8 @@ from gmpy2 import invert, gcd
 import hashlib
 
 # 已知的公钥
-N = 
-e = 
+N =
+e =
 # 使用 N 来尝试分解成 p 和 q
 p=
 q=
@@ -165,7 +157,7 @@ phi = (p - 1) * (q - 1)
 d = invert(e, phi)
 
 # 已知的密文 c
-c = 
+c =
 
 # 解密
 m_decrypted = pow(c, d, N)
@@ -177,8 +169,6 @@ md5.update(str(m_decrypted).encode('utf-8'))
 flag =md5.hexdigest()
 print(flag)
 ```
-
-
 
 ## 使用z3求解
 
@@ -204,12 +194,10 @@ if solver.check() == sat:
     v13_val = model[v13].as_long()
     v14_val = model[v14].as_long()
     v15_val = model[v15].as_long()
-    
+
     # 打印结果
     print(f"Found values: v13 = {v13_val:#x}, v14 = {v14_val:#x}, v15 = {v15_val:#x}")
 ```
-
-
 
 ## pwn计算的小脚本
 
@@ -218,9 +206,9 @@ if solver.check() == sat:
 ```python
 from pwn import *
 import string
- 
+
 context.log_level = 'debug'
- 
+
 p = remote('47.97.58.52', 40010) #环境地址，端口
 
 def send_after_clean(content: bytes = b"", until: bytes = None,
@@ -232,7 +220,6 @@ def send_after_clean(content: bytes = b"", until: bytes = None,
         if not no_show:
             print(f"[$]received:\n{received.decode('UTF-8')}")
     p.send(flat(content))
-
 
 def sendline_after_clean(content: bytes = b"", until: bytes = None,
                          timeout: float = 0.05, no_show: bool = True):
@@ -256,7 +243,7 @@ def formula_compute(formula: bytes, precise: bool = False):
         formula = formula.replace("//", "/")
         formula = formula.replace("/", "//")
     return bytes(str(eval(formula)), encoding="UTF-8")
- 
+
 p.recvuntil(b'Welcome to the calc game!\n')  #p.sendlineafter(some_string, payload) 接收到 some_string 后, 发送你的 payload，加个换行
 for i in range(100):
 	p.recvline(keepends=True)
@@ -301,7 +288,6 @@ def sendline_after_clean(content: bytes = b"", until: bytes = None,
                          timeout: float = 0.05, no_show: bool = True):
     send_after_clean([content, p.newline], until, timeout, no_show)
 
-
 def interactive_after_clean(timeout: int = 0.05, no_show: bool = True):
     received = p.clean(timeout)
     if not no_show:
@@ -339,8 +325,6 @@ for i in range(100):
 interactive_after_clean()
 ```
 
-
-
 ## 随机数+奇偶分离
 
 ```cpp
@@ -355,7 +339,7 @@ int main() {
 
     // 密钥
     uint8_t initialRandom = ;
-    
+
     // 解密结果字符串
     std::string decrypted;
 
@@ -387,8 +371,6 @@ int main() {
 }
 ```
 
-
-
 ## 高低位组合
 
 ```cpp
@@ -405,9 +387,9 @@ void decode(unsigned char *encoded_str, int length) {
 int main() {
     // Encoded data
     unsigned char encdata[] = {
-        
+
     };
-    
+
     int length = sizeof(encdata) / sizeof(encdata[0]);
 
     // Decode the data
@@ -422,8 +404,6 @@ int main() {
     return 0;
 }
 ```
-
-
 
 ## 爆破程序
 
@@ -475,8 +455,6 @@ for generated_input in generate_inputs():
         #print(f"Failed attempt with input: {generated_input}")
         #print(f"Program output: {result}")
 ```
-
-
 
 ## 二次剩余+中国剩余定理
 
