@@ -10,7 +10,7 @@ slug:
 
 目前的 demo 自动化的程度并不高，目前的工作流程如下：
 
-<img src ="/llm-Bilibili/structure.png">
+<img src ="/llm-BiliBili/structure.png">
 
 首先设计一个从 json 文件中提取目标文本的函数，在提取之前，我们要先观察一下 json 的格式：
 
