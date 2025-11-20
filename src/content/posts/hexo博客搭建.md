@@ -2,7 +2,7 @@
 title: hexo博客搭建
 pubDate: 2024-04-15
 categories: ['Environment']
-description: ''
+description: '使用Github+Hexo搭建个人博客，需准备Github账号、NodeJS和Git。创建Github仓库并配置Token，安装Hexo并初始化博客项目，推荐Fluid主题。配置LeanCloud实现浏览数统计和评论功能。掌握快速导航和多级分类等使用技巧，完善博客功能。'
 slug:
 ---
 

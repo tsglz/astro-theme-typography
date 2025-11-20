@@ -2,7 +2,7 @@
 title: 对TEMPEST代码的研究（一）
 pubDate: 2025-03-24
 categories: ['C2']
-description: ''
+description: 'TEMPEST是用Rust编写的研究性C2框架，包含Anvil服务器、Conduit客户端和IMPS植入物三部分。Anvil提供带API的服务器和SQLite数据库，Conduct是跨平台终端客户端，IMPS支持TLS加密通信、远程进程注入和Bof等功能。服务器使用config.toml配置，需要TLS证书；植入物使用函数地址查找和TEB->PEB遍历技术。项目精简设计，支持生成exe和dll，注重OPSEC，暂不支持shellcode。'
 slug: 
 ---
 

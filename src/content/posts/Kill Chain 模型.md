@@ -2,7 +2,7 @@
 title: Kill Chain 模型
 pubDate: 2025-10-03
 categories: ['Red Team']
-description: ''
+description: 'Kill Chain模型介绍。'
 slug:
 ---
 

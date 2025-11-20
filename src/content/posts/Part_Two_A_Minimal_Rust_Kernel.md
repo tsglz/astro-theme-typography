@@ -2,7 +2,7 @@
 title: Part_Two_A_Minimal_Rust_Kernel
 pubDate: 2024-11-05
 categories: ['RustOS']
-description: ''
+description: '本文介绍使用Rust构建最小内核的过程，重点是通过build-std特性重编译core等标准crate，该特性仅在Nightly环境下可用。需下载源码并配置build-std-features启用内存函数，设置特定编译目标。通过写入特定缓冲区实现屏幕字符打印，创建引导映像并组合内核与引导程序，使用llvm-tools-preview和QEMU运行，也可写入U盘启动但可能不支持UEFI。'
 slug:
 ---
 

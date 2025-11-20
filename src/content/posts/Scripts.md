@@ -2,7 +2,7 @@
 title: Scripts
 pubDate: 2024-10-18
 categories: ['Wp']
-description: ''
+description: '作者分享比赛中使用的多种模板化脚本，包括异或、大小写转化、RSA+MD5处理、z3求解、pwn计算、随机数处理、高低位组合、爆破程序及二次剩余+中国剩余定理等。这些脚本可节省大量时间，部分是从其他wp获取，需修改后使用。作者提到多解是正常的，需排除验证。'
 slug:
 ---
 

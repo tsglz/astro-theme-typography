@@ -2,7 +2,7 @@
 title: Part_One_First_Sight
 pubDate: 2024-11-05
 categories: ['RustOS']
-description: ''
+description: '本文介绍了如何创建独立式可执行程序，参考了Writing an OS in Rust资源。内容包括样例代码、cargo.toml配置，以及Windows平台的不同编译命令。可在rust目录下创建config文件进行配置，但注意config和config.toml不能同时存在。之后编译采用裸机方式，并建议使用nightly版本。'
 slug:
 ---
 
