@@ -21,7 +21,6 @@ slug:
 
 ```
 [Bili_ai_fast_get]
-    content.txt
     deepseek_llm.py
     get_subtitle.py
     main.py
