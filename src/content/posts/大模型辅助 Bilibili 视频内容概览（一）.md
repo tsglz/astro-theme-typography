@@ -1,7 +1,7 @@
 ---
 title: 大模型辅助 Bilibili 视频内容概览（一）
 pubDate: 2025-11-17
-categories: ['ai_summary']
+categories: ['Ai_summary_skills']
 description: '作者开发了使用大模型辅助Bilibili视频内容概览的工具，目前自动化程度不高，工作流程包括从json提取文本、保存到文件并调用glm-4.5-flash模型进行总结。该模型免费且准确度与付费模型相当。当前存在手动操作繁琐和部分视频无字幕或音频模糊导致文本偏差的问题，后续将重点解决这两个方向。'
 slug:
 ---
