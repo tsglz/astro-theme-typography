@@ -4,6 +4,7 @@ pubDate: 2025-12-9
 categories: ['Yara']
 description: 'VirusTotal支持yara规则筛选样本，有两种方式：Livehunt匹配未来样本，Retrohunt批量匹配历史样本。文章展示了一个匹配PE恶意样本+持久化+RWX内存分配的yara规则，但存在误报和漏报问题。目前匹配到5.0K样本，计划提高匹配针对性。'
 slug:
+draft: true
 ---
 
 VirusTotal 支持使用 yara 规则筛选样本，共有两种方式：
@@ -19,7 +20,30 @@ VirusTotal 支持使用 yara 规则筛选样本，共有两种方式：
 
 Yara 基本规则：https://yara.readthedocs.io/en/stable/writingrules.html
 
-首先尝试写一个通用样本的匹配规则，通过 Retrohunt 来查找符合条件的样本：
+这里为了更好地测试代码，我使用了 vscode+YARA(插件)+yara64.exe(和yara文件放在同一目录)+rule.yara 的配置，可以快速在本地对目标样本进行测试。
+
+yara64.exe 可以从 https://github.com/VirusTotal/yara 下载。
+
+这里先讲一讲一些比较常用的内容：
+
+第一个是 yara 中常见的关键字：
+
+| all      | and       | any        | ascii    | at          | base64   | base64wide | condition |
+| -------- | --------- | ---------- | -------- | ----------- | -------- | ---------- | --------- |
+| contains | endswith  | entrypoint | false    | filesize    | for      | fullword   | global    |
+| import   | icontains | iendswith  | iequals  | in          | include  | int16      | int16be   |
+| int32    | int32be   | int8       | int8be   | istartswith | matches  | meta       | nocase    |
+| none     | not       | of         | or       | private     | rule     | startswith | strings   |
+| them     | true      | uint16     | uint16be | uint32      | uint32be | uint8      | uint8be   |
+| wide     | xor       | defined    |          |             |          |            |           |
+
+yara 规则通常由两部分组成：字符串定义（strings）和条件（condition）。字符串有三种类型，十六进制，文本和正则表达式。
+
+所以第二个讲一下 yara 中的字符串：
+
+最后讲一讲 yara 中的条件：
+
+这里笔者尝试写了一个通用样本的匹配规则，通过 Retrohunt 来查找符合条件的样本：
 
 ```yara
 import "pe"
