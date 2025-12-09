@@ -15,7 +15,7 @@ VirusTotal 支持使用 yara 规则筛选样本，共有两种方式：
 
 点开侧边栏，在 IoC Investigation 中，下图黄框按需要点击即可：
 
-<img src ="/VirusTotal-yara 规则学习/1.IoC Investigation">
+<img src ="/vt-yara/1.IoC Investigation.png">
 
 Yara 基本规则：https://yara.readthedocs.io/en/stable/writingrules.html
 
