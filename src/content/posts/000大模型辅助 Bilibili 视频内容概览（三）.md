@@ -1,8 +1,8 @@
 ---
 title: 大模型辅助 Bilibili 视频内容概览（三）
-pubDate: 2025-12-8
+pubDate: 2025-12-10
 categories: ['Ai_summary_skills']
-description: ''
+description: 'todo'
 slug:
 draft: true
 ---
