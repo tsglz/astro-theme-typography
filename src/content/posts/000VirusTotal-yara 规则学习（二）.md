@@ -1,6 +1,6 @@
 ---
 title: VirusTotal-yara 规则学习（二）
-pubDate: 2025-12-12
+pubDate: 2025-12-14
 categories: ['Yara']
 description: 'todo'
 slug:
