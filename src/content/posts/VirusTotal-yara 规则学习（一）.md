@@ -1,10 +1,9 @@
 ---
 title: VirusTotal-yara 规则学习（一）
-pubDate: 2025-12-12
+pubDate: 2025-12-18
 categories: ['Yara']
-description: 'todo'
+description: 'VirusTotal支持两种yara规则使用方式：上传到Livehunt匹配未来样本，或用Retrohunt对历史样本批量匹配。yara规则由字符串定义和条件组成，字符串类型包括十六进制、文本和正则表达式，各有多种修饰符增强匹配能力。实际应用中需平衡严格性与准确性，避免误报漏报，且规则需持续更新以应对攻防对抗。'
 slug:
-draft: true
 ---
 
 VirusTotal 支持使用 yara 规则筛选样本，共有两种方式：
@@ -172,7 +171,7 @@ rule test
 
 注：这里的修饰符只是将字符串中字符的 ASCII 码与零交错排列，它并不支持包含非英文字符的真正 UTF-16 字符串。
 
-xor 修饰符可用于搜索应用了单字节 xor 运算的字符串。也就是说，但你怀疑某段文本在样本中存在异或版本，可以使用这个修饰符，用法如下：
+`xor` 修饰符可用于搜索应用了单字节 `xor` 运算的字符串。也就是说，但你怀疑某段文本在样本中存在异或版本，可以使用这个修饰符，用法如下：
 
 ```yara
 rule test
@@ -185,11 +184,11 @@ rule test
 }
 ```
 
-一旦使用了 xor 修饰符，该文本会被尝试从 0x00 ~ 0xFF 的密钥进行异或，有一个命中即判定为命中。
+一旦使用了 `xor` 修饰符，该文本会被尝试从 0x00 ~ 0xFF 的密钥进行异或，有一个命中即判定为命中。
 
-文档中提到将 xor 修饰符 与 wide 和 ascii 结合使用。xor 修饰符会应用在所有其他修饰符之后。这意味着同时使用 xor 和 wide (WIDE) 会导致异或运算应用于交错的零字节。
+文档中提到将 `xor` 修饰符 与 `wide` 和 `ascii` 结合使用。`xor` 修饰符会应用在所有其他修饰符之后。这意味着同时使用 `xor` 和 `wide (WIDE)` 会导致异或运算应用于交错的零字节。
 
-此外，yara 3.11 起，可以对 xor 的字节范围进行限定，写法如下：
+此外，yara 3.11 起，可以对 `xor` 的字节范围进行限定，写法如下：
 
 ```yara
 rule test
@@ -201,7 +200,88 @@ rule test
 }
 ```
 
-# xor 写完了，后面写 base64
+`base64` 可用于搜索经过 base64 编码的字符串，`base64wide` 则是先将原始字符转换为两个字节的形式，再做 base64 进行匹配。`base64` 和 `base64wide` 修饰符仅支持文本字符串。
+
+```yara
+rule test {
+    strings:
+        $a = "This program cannot" base64
+        $b = "This program cannot" base64wide
+    condition:
+        $a and $b
+}
+```
+
+值得一提的是，`base64` 和 `base64wide` 支持自定义字母表，但是字母表长度必须为 64 字节。用例如下所示：
+
+```yara
+rule test
+{
+    strings:
+        $a = "This program cannot" base64("!@#$%^&*(){}[].,|ABCDEFGHIJ\x09LMNOPQRSTUVWXYZabcdefghijklmnopqrstu")
+    condition:
+        $a
+}
+```
+
+yara 在 base64 编码后会去除开头和结尾的字符，这是为了更好地命中样本，减少漏报。但因此需要注意，使用 `base64` 相关的匹配时，尽量不要使用过短的字符串进行匹配，以避免大量误报的可能。
+
+`fullword` 可以对字符串进行一个更严格的限制，保证字符串仅在文件中以非字母，数字字符分隔时才会匹配。例如，如果将字符串 domain 定义为 fullword ，则它不会匹配 www.mydomain.com ，但会匹配其他内容。 www.my-domain.com 和 www.domain.com 。
+
+最后是正则表达式：
+
+这个不多赘述了，需要什么规则和 ai 说让它写就完了，示例如下：
+
+```yara
+rule test
+{
+    strings:
+        $re1 = /md5: [0-9a-fA-F]{32}/
+        $re2 = /state: (on|off)/
+    condition:
+        $re1 and $re2
+}
+```
+
+正则表达式也可以像文本字符串一样，后跟 nocase 、 ascii 、 wide 和 fullword 修饰符。此外，可以使用修饰符 i 来忽略大小写，在要匹配的内容中加 . 来匹配任意字符（默认不匹配换行符），但是可以使用 修饰符 s 来匹配换行符。示例如下：
+
+```yara
+rule test
+{
+    strings:
+        $re1 = /foo/i    // 大小写不敏感
+        $re2 = /bar./s   // bar后可跟任意一个字符，包括换行符
+        $re3 = /baz./is  // 同上，且不区分大小写
+    condition:
+        any of them
+}
+```
+
+此外，有一个比较好用的修饰词 private，可以让规则正常匹配，但不会在命中输出中显示，这样既可以避免检测点暴露，又可以减少输出过程中的噪声。示例如下：
+
+```yara
+rule test
+{
+    strings:
+        private $helper1 = "cmd.exe"
+        private $helper2 = "powershell"
+        $core = "Invoke-Mimikatz"
+
+    condition:
+        ($helper1 or $helper2) and $core
+}
+```
+
+| Keyword 关键词 | String Types 字符串类型    | Summary 概括                                                      | Restrictions 限制                                      |
+| -------------- | -------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------ |
+| `nocase`       | 文本，正则表达式           | 忽略大小写                                                        | 不能与 `xor` 、 `base64` 或 `base64wide` 一起使用。    |
+| `wide`         | 文本，正则表达式           | 通过穿插空字符 (0x00) 来模拟 UTF-16 编码                          | 无                                                     |
+| `ascii`        | 文本，正则表达式           | 同时匹配 ASCII 字符，仅当使用 `wide` 集时才需要。                 | 无                                                     |
+| `xor`          | 文本                       | 与单字节键进行文本字符串异或运算                                  | 不能与 `nocase` 、 `base64` 或 `base64wide` 一起使用。 |
+| `base64        | 文本                       | 转换为 3 种 base64 编码字符串                                     | 不能与 `nocase` 、 `xor` 或 `fullword` 一起使用。      |
+| `base64wide    | 文本                       | 转换为 3 种 base64 编码字符串，然后像 `wide` 一样交错插入空字符。 | 不能与 `nocase` 、 `xor` 或 `fullword` 一起使用。      |
+| `fullword`     | 文本，正则表达式           | 匹配项前后没有字母，数字，字符                                    | 不能与 `base64` 或 `base64wide` 一起使用。             |
+| `private`      | 十六进制、文本、正则表达式 | 结果不包含在输出中                                                | 无                                                     |
 
 这里笔者尝试写了一个通用样本的匹配规则，通过 Retrohunt 来查找符合条件的样本：
 
@@ -228,4 +308,6 @@ rule test_match
 - 首先是注册表路径，可能出现在一些合法启动的程序中，造成误报；
 - 其次，RWX 内存申请 通配符可能过于严格，造成漏报，可以针对性地放宽部分条件。
 
-在下一篇中笔者将讲一讲 yara 中的条件，同时讲一讲怎么提高匹配的针对性，对单一系列的样本进行高准确度的匹配。
+在下一篇中笔者将讲一讲 yara 中的条件，同时讲一讲怎么提高匹配的针对性。此外，之后会对单一系列的样本进行高准确度的匹配，这需要对相关样本进行分析。
+
+需要注意的是，规则的构建并不是一劳永逸的，而是伴随着攻防双方的不断对抗，技术的不断迭代，需要不断更新的长期工作。
