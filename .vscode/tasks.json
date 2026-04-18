@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Git Commit No Verify",
+      "type": "shell",
+      "command": "git commit -m \\\"${input:commitMessage}\\\" --no-verify",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "commitMessage",
+      "type": "promptString",
+      "description": "Enter commit message"
+    }
+  ]
+}
