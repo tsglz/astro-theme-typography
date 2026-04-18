@@ -1,6 +1,6 @@
 ---
 title: 使用 yt-dlp 从 Youtube 下载音频记录
-pubDate: 2025-4-18
+pubDate: 2026-4-18
 categories: ['Tools']
 description: '通过 yt-dlp 以及插件 Get cookies.txt Clean 从 Chrome 浏览器上下载 Youtube 视频的实践。'
 slug:
