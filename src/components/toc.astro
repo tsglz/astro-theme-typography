@@ -115,9 +115,16 @@ const { toc } = Astro.props
         event.preventDefault()
         const targetId = link.getAttribute('href')?.substring(1)
         if (targetId) {
-          const target = document.getElementById(targetId)
+          // 尝试直接获取目标元素
+          let target = document.getElementById(targetId)
+
+          // 如果直接获取失败，尝试通过选择器获取
+          if (!target) {
+            target = document.querySelector(`[id="${targetId}"]`)
+          }
+
           if (target) {
-            // 使用scrollIntoView方法，这是最可靠的方式
+            // 确保目标元素在视口中
             target.scrollIntoView({
               behavior: 'smooth',
               block: 'start',
@@ -139,17 +146,30 @@ const { toc } = Astro.props
 
     // 目录同步
     const tocLinksForSync = document.querySelectorAll('.toc-link')
-    const toc = Array.from(tocLinksForSync).map((link) => ({
-      link: link as HTMLElement,
-      target: document.querySelector(link.getAttribute('href')!)! as HTMLElement,
-    }))
+    const toc = Array.from(tocLinksForSync)
+      .map((link) => {
+        const href = link.getAttribute('href')
+        if (href) {
+          const targetId = href.substring(1)
+          const target = document.getElementById(targetId) || document.querySelector(`[id="${targetId}"]`)
+          return {
+            link: link as HTMLElement,
+            target: target as HTMLElement,
+          }
+        }
+        return null
+      })
+      .filter(Boolean)
 
     const targetsObserver = new IntersectionObserver(
       (targets) => {
         targets.forEach((entry) => {
-          const link = document.querySelector(`.toc-link[href="#${entry.target.getAttribute('id')}"]`) as HTMLElement
-          if (link) {
-            link.classList[entry.intersectionRatio > 0 ? 'add' : 'remove']('active')
+          const id = entry.target.getAttribute('id')
+          if (id) {
+            const link = document.querySelector(`.toc-link[href="#${id}"]`) as HTMLElement
+            if (link) {
+              link.classList[entry.intersectionRatio > 0 ? 'add' : 'remove']('active')
+            }
           }
         })
       },
@@ -158,9 +178,9 @@ const { toc } = Astro.props
       },
     )
 
-    toc.forEach(({ target }) => {
-      if (target) {
-        targetsObserver.observe(target)
+    toc.forEach((item) => {
+      if (item && item.target) {
+        targetsObserver.observe(item.target)
       }
     })
   })
