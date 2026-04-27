@@ -1,0 +1,167 @@
+---
+import type { MarkdownHeading } from 'astro'
+
+type HeadingWithSubheadings = MarkdownHeading & {
+  subheadings?: HeadingWithSubheadings[]
+}
+
+interface Props {
+  toc: HeadingWithSubheadings[]
+}
+
+const { toc } = Astro.props
+---
+
+<div class="toc">
+  <h3 class="toc-title">目录</h3>
+  <ol class="toc-list">
+    {
+      toc.map((heading) => (
+        <li>
+          <a href={`#${heading.slug}`} class="toc-link">
+            {heading.text}
+          </a>
+          {heading.subheadings && heading.subheadings.length > 0 && (
+            <ol class="toc-list">
+              {heading.subheadings.map((subheading) => (
+                <li>
+                  <a href={`#${subheading.slug}`} class="toc-link">
+                    {subheading.text}
+                  </a>
+                  {subheading.subheadings && subheading.subheadings.length > 0 && (
+                    <ol class="toc-list">
+                      {subheading.subheadings.map((subsubheading) => (
+                        <li>
+                          <a href={`#${subsubheading.slug}`} class="toc-link">
+                            {subsubheading.text}
+                          </a>
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+                </li>
+              ))}
+            </ol>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</div>
+
+<style>
+  .toc {
+    position: sticky;
+    top: 2rem;
+    padding: 1rem;
+    background: var(--color-background);
+    border: 1px solid var(--color-shadow);
+    border-radius: 0.5rem;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+
+  .toc-title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc-list li {
+    margin-bottom: 0.5rem;
+  }
+
+  .toc-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: all 0.3s;
+    @apply p-[1.5px] decoration-underline decoration-[0.1em] decoration-offset-[2px];
+  }
+
+  .toc-link:hover {
+    @apply text-[var(--color-background)] bg-[var(--color-primary)] decoration-[var(--color-primary)];
+  }
+
+  .toc-link.active {
+    @apply text-[var(--color-background)] bg-[var(--color-primary)] decoration-[var(--color-primary)];
+    font-weight: 600;
+  }
+
+  .toc-list .toc-list {
+    margin-left: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .toc-list .toc-list .toc-list {
+    margin-left: 1rem;
+    font-size: 0.85rem;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 平滑定位
+    const tocLinks = document.querySelectorAll('.toc-link')
+    tocLinks.forEach((link) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault()
+        const targetId = link.getAttribute('href')?.substring(1)
+        if (targetId) {
+          const target = document.getElementById(targetId)
+          if (target) {
+            // 使用scrollIntoView方法，这是最可靠的方式
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+              inline: 'nearest',
+            })
+
+            // 手动调整滚动位置，确保标题不会被固定导航栏遮挡
+            setTimeout(() => {
+              const currentScroll = window.scrollY
+              window.scrollTo({
+                top: currentScroll - 100,
+                behavior: 'smooth',
+              })
+            }, 100)
+          }
+        }
+      })
+    })
+
+    // 目录同步
+    const tocLinksForSync = document.querySelectorAll('.toc-link')
+    const toc = Array.from(tocLinksForSync).map((link) => ({
+      link: link as HTMLElement,
+      target: document.querySelector(link.getAttribute('href')!)! as HTMLElement,
+    }))
+
+    const targetsObserver = new IntersectionObserver(
+      (targets) => {
+        targets.forEach((entry) => {
+          const link = document.querySelector(`.toc-link[href="#${entry.target.getAttribute('id')}"]`) as HTMLElement
+          if (link) {
+            link.classList[entry.intersectionRatio > 0 ? 'add' : 'remove']('active')
+          }
+        })
+      },
+      {
+        rootMargin: '-100px 0px -80% 0px',
+      },
+    )
+
+    toc.forEach(({ target }) => {
+      if (target) {
+        targetsObserver.observe(target)
+      }
+    })
+  })
+</script>

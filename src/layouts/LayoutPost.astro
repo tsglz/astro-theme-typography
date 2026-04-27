@@ -1,15 +1,82 @@
 ---
 import PostMeta from '~/components/PostMeta.astro'
+import Toc from '~/components/toc.astro'
 import type { Post } from '~/types'
+import type { MarkdownHeading } from 'astro'
+
+type HeadingWithSubheadings = MarkdownHeading & {
+  subheadings?: HeadingWithSubheadings[]
+}
 
 interface Props {
   post: Post
+  toc?: HeadingWithSubheadings[]
 }
 
-const { post } = Astro.props
+const { post, toc = [] } = Astro.props
 ---
 
-<article class="prose max-w-none">
-  <PostMeta post={post} />
-  <slot />
-</article>
+<div class={`post-layout ${toc.length > 0 ? 'with-toc' : ''}`}>
+  {
+    toc.length > 0 && (
+      <div class="post-sidebar">
+        <Toc toc={toc} />
+      </div>
+    )
+  }
+  <div class="post-content">
+    <article class="prose max-w-none">
+      <PostMeta post={post} />
+      <slot />
+    </article>
+  </div>
+</div>
+
+<style>
+  .post-layout {
+    display: flex;
+    gap: 2rem;
+    min-width: 100%;
+  }
+
+  .post-layout.with-toc {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 0 1rem 0 200px;
+  }
+
+  .post-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .post-content img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .post-sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    margin-left: -200px;
+  }
+
+  @media (max-width: 768px) {
+    .post-layout {
+      flex-direction: column;
+    }
+
+    .post-sidebar {
+      width: 100%;
+      margin-left: 0;
+    }
+
+    .toc {
+      position: relative;
+      top: 0;
+      max-height: none;
+    }
+  }
+</style>
