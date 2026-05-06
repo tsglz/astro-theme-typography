@@ -35,6 +35,28 @@ const { toc } = Astro.props
                           <a href={`#${subsubheading.slug}`} class="toc-link">
                             {subsubheading.text}
                           </a>
+                          {subsubheading.subheadings && subsubheading.subheadings.length > 0 && (
+                            <ol class="toc-list">
+                              {subsubheading.subheadings.map((subsubsubheading) => (
+                                <li>
+                                  <a href={`#${subsubsubheading.slug}`} class="toc-link">
+                                    {subsubsubheading.text}
+                                  </a>
+                                  {subsubsubheading.subheadings && subsubsubheading.subheadings.length > 0 && (
+                                    <ol class="toc-list">
+                                      {subsubsubheading.subheadings.map((subsubsubsubheading) => (
+                                        <li>
+                                          <a href={`#${subsubsubsubheading.slug}`} class="toc-link">
+                                            {subsubsubsubheading.text}
+                                          </a>
+                                        </li>
+                                      ))}
+                                    </ol>
+                                  )}
+                                </li>
+                              ))}
+                            </ol>
+                          )}
                         </li>
                       ))}
                     </ol>
@@ -103,6 +125,16 @@ const { toc } = Astro.props
   .toc-list .toc-list .toc-list {
     margin-left: 1rem;
     font-size: 0.85rem;
+  }
+
+  .toc-list .toc-list .toc-list .toc-list {
+    margin-left: 1rem;
+    font-size: 0.8rem;
+  }
+
+  .toc-list .toc-list .toc-list .toc-list .toc-list {
+    margin-left: 1rem;
+    font-size: 0.75rem;
   }
 </style>
 

@@ -54,9 +54,42 @@ const grouppedHeadings = headings.reduce((array, heading) => {
       }
     }
 
-    // 添加到父节点的subheadings中
-    if (parent.subheadings) {
-      parent.subheadings.push({ ...heading, subheadings: [] })
+    // 如果当前标题与父节点同级，直接添加到数组中
+    if (currentDepth === parentDepth) {
+      array.push({ ...heading, subheadings: [] })
+    }
+    // 如果当前标题是父节点的子节点，添加到父节点的subheadings中
+    else if (currentDepth > parentDepth) {
+      if (parent.subheadings) {
+        parent.subheadings.push({ ...heading, subheadings: [] })
+      }
+    }
+    // 如果当前标题是父节点的父级或同级，需要向上查找正确的父节点
+    else {
+      // 从数组中找到深度比当前标题小1的最后一个节点
+      let tempArray = [...array]
+      let foundParent = null
+
+      while (tempArray.length > 0 && !foundParent) {
+        const lastItem = tempArray[tempArray.length - 1]
+        if (lastItem.depth === currentDepth - 1) {
+          foundParent = lastItem
+        } else {
+          // 如果最后一个节点有子节点，检查其最后一个子节点
+          if (lastItem.subheadings && lastItem.subheadings.length > 0) {
+            tempArray = [...lastItem.subheadings]
+          } else {
+            tempArray.pop()
+          }
+        }
+      }
+
+      if (foundParent && foundParent.subheadings) {
+        foundParent.subheadings.push({ ...heading, subheadings: [] })
+      } else {
+        // 如果找不到合适的父节点，直接添加到数组中
+        array.push({ ...heading, subheadings: [] })
+      }
     }
   }
   return array
