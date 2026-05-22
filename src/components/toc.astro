@@ -139,7 +139,7 @@ const { toc } = Astro.props
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  function initToc() {
     // 平滑定位
     const tocLinks = document.querySelectorAll('.toc-link')
     tocLinks.forEach((link) => {
@@ -215,5 +215,11 @@ const { toc } = Astro.props
         targetsObserver.observe(item.target)
       }
     })
-  })
+  }
+
+  // 初始化目录功能
+  initToc()
+
+  // 监听页面导航事件，确保在客户端导航后重新初始化
+  document.addEventListener('astro:page-load', initToc)
 </script>
