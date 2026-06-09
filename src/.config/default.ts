@@ -5,7 +5,7 @@ import type { ThemeConfig } from '~/types'
 
 export const defaultConfig: ThemeConfig = {
   site: {
-    title: "Tsglz's blog",
+    title: 'Tsglz\'s blog',
     subtitle: 'keep learning',
     author: 'Tsglz',
     description: 'Rediscory the beauty of typography',

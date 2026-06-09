@@ -64,3 +64,14 @@ export function getPathFromCategory(
   const mappingPath = category_map.find(l => l.name === category)
   return mappingPath ? mappingPath.path : category
 }
+
+/**
+ * 生成文章的完整URL路径
+ * 支持子文件夹分类，如：杂谈/阅读笔记
+ */
+export function getPostUrl(postId: string): string {
+  // 将 postId 中的路径分隔符转换为 URL 路径格式
+  // postId 格式：杂谈/阅读笔记 或 阅读笔记
+  const normalizedPath = postId.replace(/\\/g, '/').replace(/\/$/, '')
+  return `/posts/${normalizedPath}/`
+}

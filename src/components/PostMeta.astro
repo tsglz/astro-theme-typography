@@ -1,6 +1,6 @@
 ---
 import type { Post } from '~/types'
-import { formatDate } from '~/utils'
+import { formatDate, getPostUrl } from '~/utils'
 import PostCategory from './PostCategory.astro'
 
 interface Props {
@@ -11,11 +11,12 @@ const { post } = Astro.props
 const { translate: t } = Astro.locals
 
 const categoryList = post.data.categories ?? []
+const postUrl = getPostUrl(post.id)
 ---
 
 <header flex="~ col gap-2">
   <h1 class="post-title">
-    <a class="not-prose" href={`/posts/${post.id}/`}>{post.data.title}</a>
+    <a class="not-prose" href={postUrl}>{post.data.title}</a>
   </h1>
   <div class="text-3.5">
     <span>{t(post.data.modDate ? 'updated_at' : 'posted_at')}</span>

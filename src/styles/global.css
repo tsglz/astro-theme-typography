@@ -11,8 +11,7 @@ html {
 
   text-shadow: 1px 1px 1px var(--color-shadow);
   background-size: 7px 7px;
-  background-image:
-    linear-gradient(to right, var(--color-shadow) 1px, transparent 1px),
+  background-image: linear-gradient(to right, var(--color-shadow) 1px, transparent 1px),
     linear-gradient(to bottom, var(--color-shadow) 1px, transparent 1px);
 }
 
