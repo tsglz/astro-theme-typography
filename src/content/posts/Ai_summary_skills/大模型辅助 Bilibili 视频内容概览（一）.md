@@ -99,8 +99,8 @@ messages=[
 
 前两次 ai 总结内容同样在博客里，这里给出链接：
 
-https://tsglz-omega.vercel.app/posts/20251110-ai%E6%80%BB%E7%BB%93/
+[2025.11.10-ai总结](/posts/ai_summary/20251110-ai总结/)
 
-https://tsglz-omega.vercel.app/posts/20251116-ai%E6%80%BB%E7%BB%93/
+[2025.11.16-ai总结](/posts/ai_summary/20251116-ai总结/)
 
 在实际使用的过程中感官还算可以，但是手动操作过于麻烦；而且部分 B 站视频没有相应的字幕，或者音频模糊，导致文本出现偏差的问题，后续将从这两个方向继续完善。

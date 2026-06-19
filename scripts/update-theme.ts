@@ -8,7 +8,7 @@ try {
 catch {
   // 如果没有添加，则添加模板仓库
   execSync(
-    'git remote add template https://github.com/moeyua/astro-theme-typography.git',
+    'git remote add template https://github.com/tsglz/astro-theme-typography.git',
     { stdio: 'inherit' },
   )
 }

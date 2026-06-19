@@ -14,7 +14,7 @@ export const defaultConfig: ThemeConfig = {
     socialLinks: [
       {
         name: 'github',
-        href: 'https://github.com/moeyua/astro-theme-typography',
+        href: 'https://github.com/tsglz/astro-theme-typography',
       },
       {
         name: 'rss',
@@ -22,11 +22,11 @@ export const defaultConfig: ThemeConfig = {
       },
       {
         name: 'twitter',
-        href: 'https://github.com/moeyua/astro-theme-typography',
+        href: 'https://twitter.com/tsglz',
       },
       {
         name: 'mastodon',
-        href: 'https://github.com/moeyua/astro-theme-typography',
+        href: 'https://github.com/tsglz/astro-theme-typography',
       },
     ],
     navLinks: [
@@ -50,7 +50,7 @@ export const defaultConfig: ThemeConfig = {
     categoryMap: [{ name: '胡适', path: 'hu-shi' }],
     footer: [
       '© %year <a target="_blank" href="%website">%author</a>',
-      'Theme <a target="_blank" href="https://github.com/Moeyua/astro-theme-typography">Typography</a> by <a target="_blank" href="https://moeyua.com">Moeyua</a>',
+      'Theme <a target="_blank" href="https://github.com/tsglz/astro-theme-typography">Typography</a> by <a target="_blank" href="https://tsglz.com">Tsglz</a>',
       'Proudly published with <a target="_blank" href="https://astro.build/">Astro</a>',
     ],
   },

@@ -6,7 +6,7 @@
   "description": "A typography theme for Astro, inspired by the design of the original Typography theme.",
   "author": "Moeyua <mail@moeyua.com> (https://github.com/moeyua/)",
   "license": "MIT",
-  "repository": "https://github.com/moeyua/astro-theme-typography",
+  "repository": "https://github.com/tsglz/astro-theme-typography",
   "scripts": {
     "dev": "astro check && astro dev",
     "build": "astro check && astro build",

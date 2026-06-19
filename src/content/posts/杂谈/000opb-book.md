@@ -1,8 +1,8 @@
 ---
-title: opb-book-2.1.v3
+title: 《opb-book-2.1.v3》读后感
 pubDate: 2026-05-29
 categories: ['杂谈']
-description: '学习程序员如何创立一人公司'
+description: '《opb-book-2.1.v3》读后感'
 slug:
 draft: true
 ---
