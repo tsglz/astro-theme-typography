@@ -7,6 +7,8 @@ This is Tsglz.
 
 Tsglz：猫猫想要，猫猫得到~
 
+MBTI成分表：5/9 INTP，1/3 ISTP，1/9 ENTP
+
 留一张彩蛋，是一个天气很好的日子拍的。虽然但是真有氛围吧，走在路上随手一拍。这个衬衫配色和当时傍晚的颜色也很搭~
 
 <img src ="/about/0.125tsglz？.png">
