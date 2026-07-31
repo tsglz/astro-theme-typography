@@ -1,7 +1,7 @@
 ---
 title: LLMVault 项目学习（一）
 pubDate: 2026-7-29
-categories: ['样本分析']
+categories: ['LLM_hacker']
 description: '包含了提示词注入、敏感信息披露、供应链投毒、训练数据污染 4 个场景'
 slug:
 ---
