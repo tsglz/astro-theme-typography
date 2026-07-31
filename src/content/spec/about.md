@@ -5,6 +5,8 @@ pubDate: 2026-6-18
 
 This is Tsglz.
 
+Parsing upon proximity.
+
 Tsglz：猫猫想要，猫猫得到~
 
 MBTI成分表：5/9 INTP，1/3 ISTP，1/9 ENTP
