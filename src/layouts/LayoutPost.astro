@@ -68,6 +68,11 @@ const { post, toc = [] } = Astro.props
       flex-direction: column;
     }
 
+    /* 移动端为纵向布局，需重置桌面端为 TOC 预留的左侧 200px padding */
+    .post-layout.with-toc {
+      padding: 0;
+    }
+
     .post-sidebar {
       width: 100%;
       margin-left: 0;
