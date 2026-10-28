@@ -108,6 +108,8 @@ npm install
 
 <img src="/hexo/sets_1.png">
 
+</br>
+
 <img src="/hexo/sets_2.png">
 
 **创建「关于页」**
@@ -213,6 +215,8 @@ npm install https://github.com/CodeFalling/hexo-asset-image --save
 - 顺手把底部的也解决一下吧
 
 <img src="/hexo/bottom.png">
+
+</br>
 
 <img src="/hexo/set_id_key.png">
 

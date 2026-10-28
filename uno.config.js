@@ -35,6 +35,12 @@ const cssExtend = {
     'white-space': 'normal',
     'word-wrap': 'break-word',
   },
+
+  'img': {
+    'display': 'block',
+    'margin-left': 'auto',
+    'margin-right': 'auto',
+  },
 }
 
 export default defineConfig({
