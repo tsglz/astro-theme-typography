@@ -13,8 +13,14 @@ import { themeConfig } from './src/.config'
 const { colorsDark, colorsLight, fonts } = themeConfig.appearance
 
 const cssExtend = {
-  ':root': {
-    '--prose-borders': '#eee',
+  'th': {
+    'text-align': 'left',
+  },
+
+  'td, th': {
+    'border-width': '1px',
+    'border-style': 'solid',
+    'border-color': '#5c5c5c',
   },
 
   'code::before,code::after': {
